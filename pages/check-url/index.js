@@ -6,10 +6,8 @@ import { useRouter } from 'next/router';
 
 
 
-export default function Home({ baseUrl, error }) {
+export default function Home({baseUrl}) {
   const router = useRouter();
-  console.log('router obj', router.query.fbclid);
-  const link = 'https://vercel.com/new'
   return (
     <div className={styles.container}>
       <Head>
@@ -20,24 +18,43 @@ export default function Home({ baseUrl, error }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org"> Media.Net</a> App
+          Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
         <p className={styles.description}>
-          Deploy app from Vercel
+          Base URL: {baseUrl}
         </p>
+
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2> Base URL:  &rarr;</h2>
-            <p>{baseUrl}</p>
-            <p></p>
+            <h2>Documentation &rarr;</h2>
+            <p>Find in-depth information about Next.js features and API.</p>
           </a>
 
           <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Check Base URL &rarr;</h2>
-            <p>{(error ? 'Check is error':'Check Successful')}</p>
+            <h2>Learn &rarr;</h2>
+            <p>Learn about Next.js in an interactive course with quizzes!</p>
           </a>
 
+          <a
+            href="https://github.com/vercel/next.js/tree/canary/examples"
+            className={styles.card}
+          >
+            <h2>Examples &rarr;</h2>
+            <p>Discover and deploy boilerplate example Next.js projects.</p>
+          </a>
 
+          <a
+            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.card}
+          >
+            <h2>Deploy &rarr;</h2>
+            <p>
+              Instantly deploy your Next.js site to a public URL with Vercel.
+            </p>
+          </a>
         </div>
       </main>
 
@@ -48,6 +65,7 @@ export default function Home({ baseUrl, error }) {
           rel="noopener noreferrer"
         >
           Powered by{' '}
+
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
@@ -57,29 +75,14 @@ export default function Home({ baseUrl, error }) {
   )
 }
 
-export async function getStaticProps({ query }) {
-  // console.log('====================================');
-  // console.log('process.env.BASE_URL', process.env.BASE_URL);
-  // console.log('====================================');
-  let posts = [];
-  let events = [];
-  let error=false;
-  try {
-    posts = await getPosts();
-    events = await getEvents();
-  } catch (err) {
-    posts=[];
-    events=[];
-    error=true;
-  }
-  console.log('test:', error);
-
+export async function getStaticProps({query}) {
+  const posts = await getPosts();
+  const events = await getEvents();
   return {
     props: {
-      posts,
-      events,
-      baseUrl: process.env.BASE_URL ?? 'http://error.com',
-      error
+     posts,
+     events,
+     baseUrl:process.env.BASE_URL ?? 'http://error.com'
     },
     revalidate: 10, // In seconds
   }
