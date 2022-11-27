@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 
 
 
-export default function Home() {
+export default function Home({baseUrl}) {
   const router = useRouter();
   console.log('router obj', router.query.fbclid);
   const link='https://vercel.com/new'
@@ -24,8 +24,7 @@ export default function Home() {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+          Base URL: {baseUrl}
         </p>
 
         <div className={styles.grid}>
@@ -79,7 +78,7 @@ export default function Home() {
 
 export async function getStaticProps({query}) {
   console.log('====================================');
-  console.log({query});
+  console.log('process.env.BASE_URL', process.env.BASE_URL);
   console.log('====================================');
  
   const posts = await getPosts();
@@ -87,7 +86,8 @@ export async function getStaticProps({query}) {
   return {
     props: {
      posts,
-     events
+     events,
+     baseUrl:process.env.BASE_URL
     },
     revalidate: 10, // In seconds
   }

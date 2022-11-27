@@ -1,4 +1,4 @@
-const BASE_URL = "https://thenewssast.com/wp-json/wp/v2";
+const BASE_URL =  process.env.BASE_URL+"/wp-json/wp/v2";
 export async function getPosts() {
   console.log('link:', BASE_URL + "/posts?_embed");
   const postsRes = await fetch(BASE_URL + "/posts?_embed");
