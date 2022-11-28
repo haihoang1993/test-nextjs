@@ -30,8 +30,7 @@ export default function PostPage({ post }) {
 }
 
 //hey Next, these are the possible slugs
-export async function getStaticPaths() {
-
+export async function getStaticPaths(context) {
 
   const paths = await getSlugs("posts");
 
@@ -46,7 +45,8 @@ export async function getStaticPaths() {
 
 //access the router, get the id, and get the data for that post
 
-export async function getStaticProps({ params, query }) {
+export async function getStaticProps(context) {
+  const { params, query } = context;
   const post = await getPost(params.slug);
 
   return {
@@ -59,3 +59,12 @@ export async function getStaticProps({ params, query }) {
 
 }
 
+// export async function getServerSideProps(context) {
+//   const { params, query } = context;
+//   console.log('getServerSideProps', query);
+//   return {
+//     props: {
+//       ...{query}
+//     }
+//   }
+// }
