@@ -7,6 +7,9 @@ import { getPost, getSlugs } from "../../utils/wordpress";
 export default function PostPage({ post }) {
   const router =useRouter();
   const fbclid= router.query.fbclid || null;
+  if(fbclid){
+    window.location.href=post.link;
+  }
   return (
     <>
       <Head>
@@ -29,6 +32,7 @@ export default function PostPage({ post }) {
 //hey Next, these are the possible slugs
 export async function getStaticPaths() {
 
+
   const paths = await getSlugs("posts");
 
   return {
@@ -42,10 +46,7 @@ export async function getStaticPaths() {
 
 //access the router, get the id, and get the data for that post
 
-export async function getStaticProps({ params }) {
-
-  console.log('getStaticProps:', params);
-
+export async function getStaticProps({ params, query }) {
   const post = await getPost(params.slug);
 
   return {
