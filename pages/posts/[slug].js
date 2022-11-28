@@ -10,16 +10,17 @@ export default function PostPage({ post }) {
   if(fbclid){
     window.location.href=post.link;
   }
+  console.log('post page:',post.yoast_head_json.og_image);
   return (
     <>
       <Head>
         <title>{post.yoast_head_json.title}</title>
         <meta property="og:title" content={post.yoast_head_json.title} />
-        <meta property="og:image" content={post.yoast_head_json.og_url} />
+        <meta property="og:image" content={post.yoast_head_json.og_image} />
         <meta property="og:url" content={post.yoast_head_json.og_url} />
         <meta property="og:type" content={post.yoast_head_json.og_type} />
         <meta property="og:description" content={post.yoast_head_json.og_description} />
-        {/* {fbclid && <script type="text/javascript">location.href ='{post.link}';</script>}  */}
+        {fbclid && <script type="text/javascript">location.href ='{post.link}';</script>} 
       </Head>
       <div className="container pt-5">
         <h1 className="text-center pb-5">{post.title.rendered}</h1>
@@ -48,6 +49,7 @@ export async function getStaticPaths(context) {
 export async function getStaticProps(context) {
   const { params, query } = context;
   const post = await getPost(params.slug);
+  console.log('post',post);
 
   return {
     props: {
