@@ -11,12 +11,13 @@ export default function PostPage({ post }) {
     window.location.href = post.link;
   }
   console.log('post page:', post.yoast_head_json.og_image);
+  const og_image = post.yoast_head_json.og_image || null;
   return (
     <>
       <Head>
         <title>{post.yoast_head_json.title}</title>
         <meta property="og:title" content={post.yoast_head_json.title} />
-        <meta property="og:image" content={post.yoast_head_json.og_image.url} />
+         {og_image && (<meta property="og:image" content={og_image} />)}
         <meta property="og:url" content={post.yoast_head_json.og_url} />
         <meta property="og:type" content={post.yoast_head_json.og_type} />
         <meta property="og:description" content={post.yoast_head_json.og_description} />
