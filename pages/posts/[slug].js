@@ -11,7 +11,7 @@ export default function PostPage({ post }) {
     window.location.href = post.link;
   }
   console.log('post page:', post.yoast_head_json.og_image);
-  const og_image = post.yoast_head_json.og_image || null;
+  const og_image = post.yoast_head_json.og_image.url  || null;
   return (
     <>
       <Head>
