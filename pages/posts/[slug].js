@@ -19,7 +19,7 @@ export default function PostPage({ post }) {
         <meta property="og:url" content={post.yoast_head_json.og_url} />
         <meta property="og:type" content={post.yoast_head_json.og_type} />
         <meta property="og:description" content={post.yoast_head_json.og_description} />
-        {fbclid && <script type="text/javascript">location.href ='{post.link}';</script>} 
+        {/* {fbclid && <script type="text/javascript">location.href ='{post.link}';</script>}  */}
       </Head>
       <div className="container pt-5">
         <h1 className="text-center pb-5">{post.title.rendered}</h1>
