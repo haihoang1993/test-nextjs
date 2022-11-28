@@ -10,7 +10,7 @@ export default function PostPage({ post }) {
   if (fbclid) {
     window.location.href = post.link;
   }
-  console.log('post page:', post.yoast_head_json.og_image);
+  console.log('post page:', post.yoast_head_json.og_image.url);
   return (
     <>
       <Head>
