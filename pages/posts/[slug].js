@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import { getPost, getSlugs } from "../../utils/wordpress";
 
 export default function PostPage({ post }) {
-  const router =useRouter();
-  const fbclid= router.query.fbclid || null;
-  if(fbclid){
-    window.location.href=post.link;
+  const router = useRouter();
+  const fbclid = router.query.fbclid || null;
+  if (fbclid) {
+    window.location.href = post.link;
   }
-  console.log('post page:',post.yoast_head_json.og_image);
+  console.log('post page:', post.yoast_head_json.og_image);
   return (
     <>
       <Head>
@@ -20,7 +20,10 @@ export default function PostPage({ post }) {
         <meta property="og:url" content={post.yoast_head_json.og_url} />
         <meta property="og:type" content={post.yoast_head_json.og_type} />
         <meta property="og:description" content={post.yoast_head_json.og_description} />
-        {fbclid && <script type="text/javascript">location.href ='{post.link}';</script>} 
+        <meta property="og:image:width" content="640" class="yoast-seo-meta-tag" />
+        <meta property="og:image:height" content="480" class="yoast-seo-meta-tag" />
+        <meta property="og:image:type" content="image/jpeg" class="yoast-seo-meta-tag" />
+        {fbclid && <script type="text/javascript">location.href ='{post.link}';</script>}
       </Head>
       <div className="container pt-5">
         <h1 className="text-center pb-5">{post.title.rendered}</h1>
@@ -49,7 +52,7 @@ export async function getStaticPaths(context) {
 export async function getStaticProps(context) {
   const { params, query } = context;
   const post = await getPost(params.slug);
-  console.log('post',post);
+  console.log('post', post);
 
   return {
     props: {
