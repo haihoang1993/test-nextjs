@@ -10,7 +10,6 @@ export default function handler(req, res) {
     const buffer = Buffer.from(response.data, 'base64');
     console.log('img:', buffer);
     res.setHeader('Content-Type', 'image/jpg')
-    res.setHeader('title', '')
     res.send(buffer)
   })
   .catch(ex => {

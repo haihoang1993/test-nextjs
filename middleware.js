@@ -5,13 +5,23 @@ export default function middleware(request) {
 
     const urlSearchParams = new URLSearchParams(search);
     const params = Object.fromEntries(urlSearchParams.entries());
-    console.log('====================================');
-    console.log('middleware',request.nextUrl );
-    console.log('middleware', params);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log('middleware',request.nextUrl );
+    // console.log('middleware', params);
+    // console.log('====================================');
     const {fbclid=null} = params;
+    const {nextUrl} = request;
+    const path = nextUrl.pathname || '';
+    const isImg = path.includes('/api');
+    // console.log('is img:', {isImg, path:path.replace('/api','')});
     if(fbclid){
-        const BASE_URL =  (process.env.BASE_URL || 'https://thenewssast.com') + request.nextUrl.pathname
+        let BASE_URL =  (process.env.BASE_URL || 'https://thenewssast.com');
+        if(isImg) {
+            const newPath = path.replace('/api','');
+            BASE_URL=BASE_URL+newPath;
+        } else {
+            BASE_URL=BASE_URL+path;;
+        }
         return NextResponse.redirect(new URL(BASE_URL, request.url))
     }
     // return NextResponse.redirect(new URL('https://www.google.com/', request.url))
@@ -25,6 +35,6 @@ export const config = {
         // '/disclaimer', // match a single, specific page
         // '/((?!public|static).*)', // match all paths not starting with 'public' or 'static'
         '/posts/:path*',
-        // '/about/:path*',
+        '/:path*',
     ]
 }
