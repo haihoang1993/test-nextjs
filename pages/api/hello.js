@@ -2,6 +2,7 @@
 const axios = require('axios');
 
 export default function handler(req, res) {
+  console.log('res:',res.getHeader('X-HEADER'));
   axios
   .get('https://thenewssast.com/wp-content/uploads/2022/12/diipng.png', {
     responseType: 'arraybuffer'
