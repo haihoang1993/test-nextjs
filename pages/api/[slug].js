@@ -4,9 +4,6 @@ import { getPost } from '../../utils/wordpress';
 const axios = require('axios');
 
 export default async function handler(req, res) {
-  // console.log('res:',res.getHeader('X-HEADER'));
-
-  // console.log('api img:',res.getHeader('URL-IMG'));
 
   const {url_img} =req.query;
   // const url_img=req.client._httpMessage.statusMessage || ''
