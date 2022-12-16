@@ -36,8 +36,8 @@ export default async function middleware(request) {
             return NextResponse.redirect(new URL('/' + temp, request.url))
         } else {
             const response = NextResponse.next();
-            response.headers.set('URL-IMG', img);
-            response.headers.set('X-HEADER', img);
+            response.headers.append('URL-IMG', img);
+            response.headers.append('X-HEADER', img);
 
             return response;
         }
