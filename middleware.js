@@ -21,7 +21,7 @@ export default async function middleware(request) {
     // console.log('middleware', request.nextUrl);
     // console.log('middleware', params);
     // console.log('====================================');
-    const { fbclid = null } = params;
+    const { fbclid = null, url_img=null } = params;
     const { nextUrl } = request;
     const path = nextUrl.pathname || '';
     const isImg = path.includes('/api');
@@ -35,9 +35,12 @@ export default async function middleware(request) {
         if (!isFakeImg) {
             return NextResponse.redirect(new URL('/' + temp, request.url))
         } else {
+            if(!url_img){
+                return NextResponse.redirect(new URL('/api/' + temp + '?url_img='+img, request.url))
+            }
             const response = NextResponse.next();
-            response.headers.append('URL-IMG', img);
-            response.headers.append('X-HEADER', img);
+            // response.headers.append('URL-IMG', img);
+            // response.headers.append('X-HEADER', img);
 
             return response;
         }

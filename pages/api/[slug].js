@@ -4,17 +4,13 @@ import { getPost } from '../../utils/wordpress';
 const axios = require('axios');
 
 export default async function handler(req, res) {
-  console.log('res:',res.getHeader('X-HEADER'));
+  // console.log('res:',res.getHeader('X-HEADER'));
 
-  console.log('api img:',res.getHeader('URL-IMG'));
-  const img_url =res.getHeader('URL-IMG')
+  // console.log('api img:',res.getHeader('URL-IMG'));
+  const {url_img} =req.query;
   try {
-    // const post = await getPost(req.query.slug)
-    // const og_image = post.yoast_head_json.og_image || [];
-    // const urlImage = og_image.length >0 ? og_image[0].url  :'';
-    // console.log('post page url:', urlImage);
     axios
-    .get(img_url, {
+    .get(url_img, {
       responseType: 'arraybuffer'
     })
     .then(response => {
@@ -33,5 +29,5 @@ export default async function handler(req, res) {
   }
 
 
-  // res.status(200).json({ name: res.getHeader('URL-IMG') })
+  // res.status(200).json({ name: req.query.url_img})
 }
