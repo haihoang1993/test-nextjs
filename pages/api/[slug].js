@@ -8,30 +8,35 @@ export default async function handler(req, res) {
 
   // console.log('api img:',res.getHeader('URL-IMG'));
 
-  // const {url_img} =req.query;
+  const {url_img} =req.query;
   // const url_img=req.client._httpMessage.statusMessage || ''
-  // try {
-  //   axios
-  //   .get(url_img, {
-  //     responseType: 'arraybuffer'
-  //   })
-  //   .then(response => {
-  //     const buffer = Buffer.from(response.data, 'base64');
-  //     console.log('img:', buffer);
-  //     res.setHeader('Content-Type', 'image/jpg')
-  //     res.send(buffer)
-  //   })
-  //   .catch(ex => {
-  //     console.error(ex);
-  //   });
-  // } catch (error) {
-  //   res.status(501).json({
-  //     error:error.toString()
-  //   })
-  // }
+  try {
+    axios
+    .get(url_img, {
+      responseType: 'arraybuffer'
+    })
+    .then(response => {
+      const buffer = Buffer.from(response.data, 'base64');
+      console.log('img:', buffer);
+      res.setHeader('Content-Type', 'image/jpg')
+      res.send(buffer)
+    })
+    .catch(ex => {
+      console.error(ex);
+    });
+  } catch (error) {
+    res.status(501).json({
+      error:error.toString()
+    })
+  }
 
   // console.log('req:', req);
 
 
-  res.status(200).json({ name: req.client._httpMessage.statusMessage|| ' null'})
+  // res.status(200).json({ name: res.getHeader('x-img')|| ' null'})
+}
+
+
+export const config = {
+  type: 'experimental-background',
 }

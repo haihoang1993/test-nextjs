@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+
 const axios = require('axios');
 // const BASE_API = 'http://192.168.1.240:3001';
 const BASE_API = 'http://haidev.ink';
@@ -13,8 +14,8 @@ async function getData(slug) {
     return data;
 }
 
-export default async function middleware(request) {
-    const { nextUrl: { search } } = request;
+export default async function middleware(reqq) {
+    const { nextUrl: { search } } = reqq;
 
     const urlSearchParams = new URLSearchParams(search);
     const params = Object.fromEntries(urlSearchParams.entries());
@@ -23,7 +24,7 @@ export default async function middleware(request) {
     // console.log('middleware', params);
     // console.log('====================================');
     const { fbclid = null, url_img = null } = params;
-    const { nextUrl } = request;
+    const { nextUrl } = reqq;
     const path = nextUrl.pathname || '';
     const isImg = path.includes('/post');
     // const response = 
@@ -36,25 +37,27 @@ export default async function middleware(request) {
         // console.log('get data:',dat);
         console.log('IMG', isFakeImg);
         if (!isFakeImg) {
-            return NextResponse.redirect(new URL('/' + temp, request.url))
+            return NextResponse.redirect(new URL('/' + temp, reqq.url))
         } else {
-            // if(!url_img){
-            //     return NextResponse.redirect(new URL('/post/' + temp + '?url_img='+img, request.url))
-            // }
+
+            if(!url_img){
+                return NextResponse.rewrite(new URL('/post/' + temp + '?url_img='+img, reqq.url))
+            } 
             // console.log('url_img:',img);
-            // const response = NextResponse.next();
+            const response = NextResponse.next();
             // response.url_img=img;
-            // return response;
+            return response;
 
-            try {
-                console.log('file:', img);
-                // const response = await axios
-                //     .get(img, {
-                //         responseType: 'arraybuffer'
-                //     })
-                //     console.log('img2:', response);
+            // try {
+            //     console.log('file:', img);
+            //     const response = await axios
+            //         .get(img, {
+            //             responseType: 'arraybuffer'
+            //         })
+            //         console.log('img2:', response);
 
-                // const buffer = Buffer.from(response.data, 'base64');
+            //     const buffer = Buffer.from(response.data, 'base64');
+            //     return new NextResponse(buffer);
 
                 // res.setHeader('Content-Type', 'image/jpg')
                 // res.send(buffer)
@@ -64,21 +67,23 @@ export default async function middleware(request) {
                 // response.url_img = img;
                 // return response;
 
-                const res=  new NextResponse(
-                    {name:'test'},
-                    { status: 200, headers: { 'content-type': 'application/json' } }
-                )
+                // const res=  new NextResponse(
+                //     {name:'test'},
+                //     { status: 200, headers: { 'content-type': 'application/json' } }
+                // )
 
-                const rd= NextResponse.next({statusText:img});
-                // rd.status=300;
-                return rd
-            } catch (error) {
-                console.log('error:', error);
-                return new NextResponse(
-                    JSON.stringify({ success: true, message: 'authentication failed' }),
-                    { status: 200, headers: { 'content-type': 'application/json' } }
-                )
-            }
+                // const rd= NextResponse.next({statusText:img});
+                // // rd.status=300;
+                // return rd
+               
+
+            // } catch (error) {
+            //     console.log('error:', error);
+            //     return new NextResponse(
+            //         JSON.stringify({ success: true, message: 'authentication failed' }),
+            //         { status: 200, headers: { 'content-type': 'application/json' } }
+            //     )
+            // }
 
 
         }
@@ -92,8 +97,9 @@ export default async function middleware(request) {
         } else {
             BASE_URL = BASE_URL + path;;
         }
-        return NextResponse.redirect(new URL(BASE_URL, request.url))
+        return NextResponse.redirect(new URL(BASE_URL, reqq.url))
     }
+    
 
     const response = NextResponse.next();
     return response;
