@@ -19,12 +19,12 @@ export default function PostPage({ post }) {
   return (
     <>
       <Head>
-        {/* <title>{post.yoast_head_json.title}</title> */}
-        {/* <meta property="og:title" content={post.yoast_head_json.title} /> */}
+        <title>{post.yoast_head_json.title}</title>
+        <meta property="og:title" content={post.yoast_head_json.title} />
          {(og_image.length>0 && <meta property="og:image" content={urlImage} />)}
         <meta property="og:url" content={urlImage} />
         <meta property="og:type" content={post.yoast_head_json.og_type} />
-        {/* <meta property="og:description" content={post.yoast_head_json.og_description} /> */}
+        <meta property="og:description" content={post.yoast_head_json.og_description} />
         <meta property="og:image:width" content="640" class="yoast-seo-meta-tag" />
         <meta property="og:image:height" content="480" class="yoast-seo-meta-tag" />
         <meta property="og:image:type" content="image/jpeg" class="yoast-seo-meta-tag" />
@@ -41,7 +41,7 @@ export default function PostPage({ post }) {
             <div className="card-text pb-5" dangerouslySetInnerHTML={{ __html: post.content.rendered }}></div>
           )
         }
-        {/* <h1 className="text-center pb-5">{post.title.rendered}</h1>  */}
+        <h1 className="text-center pb-5">{post.title.rendered}</h1> 
       </div>
     </>
   )
