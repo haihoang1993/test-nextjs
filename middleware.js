@@ -41,7 +41,7 @@ export default async function middleware(reqq) {
         } else {
 
             if(!url_img){
-                return NextResponse.rewrite(new URL('/post/' + temp + '?url_img='+img, reqq.url))
+                return NextResponse.redirect(new URL('/post/' + temp + '?url_img='+img, reqq.url))
             } 
             // console.log('url_img:',img);
             const response = NextResponse.next();
