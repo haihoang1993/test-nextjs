@@ -33,8 +33,9 @@ export default async function middleware(reqq) {
     if (isImg && !fbclid) {
         const temp = path.replace('/post/', '');
         const dat = await getData(temp);
+        console.log('get data:',dat);
+
         const { post: { isFakeImg, img } } = dat;
-        // console.log('get data:',dat);
         console.log('IMG', isFakeImg);
         if (!isFakeImg) {
             return NextResponse.redirect(new URL('/' + temp, reqq.url))

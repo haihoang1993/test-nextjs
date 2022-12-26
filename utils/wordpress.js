@@ -9,7 +9,7 @@ export async function getPosts() {
 export async function getPost(slug) {
   const posts = await getPosts();
   // console.log('posts:',posts);
-  const postArray = posts.filter((post) => post.slug == slug);
+  const postArray = posts.filter((post) => post.id == slug);
   const post = postArray.length > 0 ? postArray[0] : null;
   return post;
 }
