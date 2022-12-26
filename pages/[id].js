@@ -65,7 +65,7 @@ export async function getStaticPaths(context) {
 
 export async function getStaticProps(context) {
   const { params, query } = context;
-  const post = await getPost(params.slug);
+  const post = await getPost(params.id);
   console.log('post', post);
 
   return {

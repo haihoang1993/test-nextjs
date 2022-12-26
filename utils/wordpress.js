@@ -39,7 +39,7 @@ export async function getSlugs(type) {
   const elementsIds = elements.map((element) => {
     return {
       params: {
-        slug: element.slug,
+        id: element.id+'',
       },
     };
   });
